@@ -1,0 +1,11 @@
+dataset_name: TinyStories
+
+dataset_path: datasets/
+
+shuffle: true
+
+train_split: 0.9
+
+validation_split: 0.1
+
+num_workers: 4

@@ -1,0 +1,15 @@
+batch_size: 16
+
+epochs: 20
+
+learning_rate: 0.0003
+
+weight_decay: 0.01
+
+warmup_steps: 1000
+
+gradient_clip: 1.0
+
+checkpoint_every: 1000
+
+save_path: checkpoints/
