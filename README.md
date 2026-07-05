@@ -1,5 +1,23 @@
 ﻿<div align="center">
 
+# 🤖 AIRA-LLM
+
+### 🚀 Build Your Own GPT-Style Large Language Model From Scratch
+
+<p>
+A research-oriented implementation of a GPT-style decoder-only Large Language Model built from scratch using <b>Python</b> and <b>PyTorch</b>.
+</p>
+
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red?logo=pytorch)
+![Status](https://img.shields.io/badge/Status-Active-success)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Version](https://img.shields.io/badge/Version-v0.3-blue)
+
+⭐ Learn • Build • Experiment • Scale
+
+</div>
+
 ---
 
 # 📑 Table of Contents
