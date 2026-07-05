@@ -1,5 +1,23 @@
 ﻿<div align="center">
 
+# 🤖 AIRA-LLM
+
+### 🚀 Build Your Own GPT-Style Large Language Model From Scratch
+
+<p>
+A research-oriented implementation of a GPT-style decoder-only Large Language Model built from scratch using <b>Python</b> and <b>PyTorch</b>.
+</p>
+
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red?logo=pytorch)
+![Status](https://img.shields.io/badge/Status-Active-success)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Version](https://img.shields.io/badge/Version-v0.3-blue)
+
+⭐ Learn • Build • Experiment • Scale
+
+</div>
+
 ---
 
 # 📑 Table of Contents
@@ -105,21 +123,21 @@ AIRA-LLM/
 
 # 📚 Tokenizer
 
-| Tokenizer         | Description          |
-| ----------------- | -------------------- |
-| 🔤 Word           | Word-level tokenizer |
-| 🔡 Character      | Character tokenizer  |
-| 🧩 Byte-Level BPE | No`<UNK>` token    |
+| Tokenizer | Description |
+|-----------|-------------|
+| 🔤 Word | Word-level tokenizer |
+| 🔡 Character | Character tokenizer |
+| 🧩 Byte-Level BPE | No `<UNK>` token |
 
 Reserved Tokens:
 
-| Token      | ID |
-| ---------- | -: |
-| `<PAD>`  |  0 |
-| `<UNK>`  |  1 |
-| `<BOS>`  |  2 |
-| `<EOS>`  |  3 |
-| `<MASK>` |  4 |
+| Token | ID |
+|------|---:|
+| `<PAD>` | 0 |
+| `<UNK>` | 1 |
+| `<BOS>` | 2 |
+| `<EOS>` | 3 |
+| `<MASK>` | 4 |
 
 ---
 
@@ -192,40 +210,36 @@ pytest tests -q
 
 # 📊 Project Status
 
-| Module             | Status |
-| ------------------ | ------ |
-| 🧠 Model           | ✅     |
-| 🔤 Tokenizer       | ✅     |
-| 📦 Dataset         | ✅     |
-| 🏋️ Training      | ✅     |
-| 💬 Chat            | ✅     |
-| ⚡ Flash Attention | 🚧     |
-| 🌀 RoPE            | 🚧     |
-| 📡 API             | 📅     |
+| Module | Status |
+|--------|--------|
+| 🧠 Model | ✅ |
+| 🔤 Tokenizer | ✅ |
+| 📦 Dataset | ✅ |
+| 🏋️ Training | ✅ |
+| 💬 Chat | ✅ |
+| ⚡ Flash Attention | 🚧 |
+| 🌀 RoPE | 🚧 |
+| 📡 API | 📅 |
 
 ---
 
 # 🗺️ Roadmap
 
 ## ✅ v0.1
-
 - Core GPT Prototype
 - Dataset Pipeline
 
 ## ✅ v0.2
-
 - GPT-style Architecture
 - Better Attention
 - BPE Tokenizer
 
 ## 🚧 v0.3
-
 - Larger Model
 - Better Training
 - Improved Generation
 
 ## 🎯 v1.0
-
 - Production Ready AIRA-LLM
 - REST API
 - Web UI
@@ -242,10 +256,15 @@ pytest tests -q
 
 ---
 
-# 📜 License
-
-MIT License
-
----
 
 <div align="center">
+
+## 👨‍💻 Author
+
+**Aashutosh Kumar**
+
+⭐ If you like this project, consider giving it a Star!
+
+Made with ❤️ using Python & PyTorch.
+
+</div>

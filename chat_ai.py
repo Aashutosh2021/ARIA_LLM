@@ -30,6 +30,7 @@ In-chat commands:
 
 import argparse
 
+# pyrefly: ignore [missing-import]
 import torch
 
 
@@ -80,6 +81,7 @@ def resolve_device(pref: str) -> torch.device:
 def main():
     args = parse_args()
 
+    # pyrefly: ignore [missing-import]
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     device = resolve_device(args.device)

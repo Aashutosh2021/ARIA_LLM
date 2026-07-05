@@ -20,7 +20,8 @@ logs/
 
 # Large downloaded datasets (keep the tiny bundled corpus)
 data/tinystories.txt
-
+.claude
+.pytest_cache
 # Tokenizer artifacts saved at repo root
 /vocab.json
 /word_vocab.json
