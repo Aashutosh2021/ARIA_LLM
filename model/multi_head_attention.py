@@ -1,12 +1,16 @@
 """
 AIRA-LLM
-Multi Head Attention
+
+GPT Style Multi Head Self Attention
 """
 
+# pyrefly: ignore [missing-import]
 import torch
+# pyrefly: ignore [missing-import]
 import torch.nn as nn
 
 from model.attention import ScaledDotProductAttention
+from model.mask import causal_mask
 
 
 class MultiHeadAttention(nn.Module):
@@ -16,6 +20,7 @@ class MultiHeadAttention(nn.Module):
         embedding_dim: int,
         num_heads: int,
         dropout: float = 0.1,
+        bias: bool = False,
     ):
         super().__init__()
 
@@ -23,91 +28,86 @@ class MultiHeadAttention(nn.Module):
 
         self.embedding_dim = embedding_dim
         self.num_heads = num_heads
-
         self.head_dim = embedding_dim // num_heads
 
-        self.q_proj = nn.Linear(
+        self.qkv = nn.Linear(
             embedding_dim,
-            embedding_dim
+            embedding_dim * 3,
+            bias=bias,
         )
 
-        self.k_proj = nn.Linear(
+        self.proj = nn.Linear(
             embedding_dim,
-            embedding_dim
-        )
-
-        self.v_proj = nn.Linear(
             embedding_dim,
-            embedding_dim
+            bias=bias,
         )
-
-        self.out_proj = nn.Linear(
-            embedding_dim,
-            embedding_dim
-        )
-
-        self.attention = ScaledDotProductAttention(dropout)
 
         self.dropout = nn.Dropout(dropout)
 
-    def split_heads(self, x):
+        self.attention = ScaledDotProductAttention(dropout)
 
-        batch_size = x.size(0)
+    def forward(self, x, mask=None):
 
-        seq_len = x.size(1)
+        batch_size, seq_len, _ = x.shape
 
-        x = x.view(
+        qkv = self.qkv(x)
+
+        q, k, v = qkv.chunk(3, dim=-1)
+
+        q = q.view(
             batch_size,
             seq_len,
             self.num_heads,
             self.head_dim,
+        ).transpose(1, 2)
+
+        k = k.view(
+            batch_size,
+            seq_len,
+            self.num_heads,
+            self.head_dim,
+        ).transpose(1, 2)
+
+        v = v.view(
+            batch_size,
+            seq_len,
+            self.num_heads,
+            self.head_dim,
+        ).transpose(1, 2)
+
+        causal = causal_mask(
+            seq_len,
+            device=x.device,
         )
 
-        return x.transpose(1, 2)
+        if mask is not None:
+            # mask is a padding mask of shape (batch, seq_len):
+            # 1 for real tokens, 0 for padding. Broadcast it over
+            # heads and query positions, then combine with the causal
+            # mask so a position can only attend to non-pad tokens at
+            # or before itself.
+            key_mask = mask.view(batch_size, 1, 1, seq_len)
+            attn_mask = causal * key_mask
+        else:
+            attn_mask = causal
 
-    def combine_heads(self, x):
+        out, weights = self.attention(
+            q,
+            k,
+            v,
+            attn_mask,
+        )
 
-        batch_size = x.size(0)
+        out = out.transpose(1, 2).contiguous()
 
-        seq_len = x.size(2)
-
-        x = x.transpose(1, 2).contiguous()
-
-        return x.view(
+        out = out.view(
             batch_size,
             seq_len,
             self.embedding_dim,
         )
 
-    def forward(
-        self,
-        x,
-        mask=None,
-    ):
+        out = self.proj(out)
 
-        q = self.split_heads(
-            self.q_proj(x)
-        )
+        out = self.dropout(out)
 
-        k = self.split_heads(
-            self.k_proj(x)
-        )
-
-        v = self.split_heads(
-            self.v_proj(x)
-        )
-
-        output, attention = self.attention(
-            q,
-            k,
-            v,
-            mask,
-        )
-
-        output = self.combine_heads(output)
-
-        output = self.out_proj(output)
-
-        output = self.dropout(output)
-
-        return output, attention
+        return out, weights

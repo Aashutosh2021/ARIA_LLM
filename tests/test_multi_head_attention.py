@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import torch
 
 from model.multi_head_attention import MultiHeadAttention
@@ -8,12 +9,13 @@ layer = MultiHeadAttention(
 )
 
 x = torch.randn(
-    4,
-    20,
+    2,
+    32,
     256,
 )
 
-output, weights = layer(x)
+out, attn = layer(x)
 
-print(output.shape)
-print(weights.shape)
+print(out.shape)
+
+print(attn.shape)

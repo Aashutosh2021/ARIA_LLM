@@ -1,69 +1,64 @@
 """
 AIRA-LLM
-Transformer Block
+
+GPT Decoder Block (Pre-Norm)
 """
 
+# pyrefly: ignore [missing-import]
+import torch
+# pyrefly: ignore [missing-import]
 import torch.nn as nn
 
 from model.multi_head_attention import MultiHeadAttention
 from model.feed_forward import FeedForward
-from model.layer_norm import LayerNorm
 
 
 class TransformerBlock(nn.Module):
 
     def __init__(
         self,
-        embedding_dim: int,
-        num_heads: int,
-        hidden_dim: int,
-        dropout: float = 0.1,
+        embedding_dim,
+        num_heads,
+        hidden_dim,
+        dropout=0.1,
+        bias=False,
     ):
         super().__init__()
+
+        self.norm1 = nn.LayerNorm(
+            embedding_dim,
+        )
 
         self.attention = MultiHeadAttention(
             embedding_dim,
             num_heads,
             dropout,
+            bias=bias,
         )
 
-        self.norm1 = LayerNorm(
+        self.norm2 = nn.LayerNorm(
             embedding_dim,
         )
 
-        self.feed_forward = FeedForward(
+        self.ffn = FeedForward(
             embedding_dim,
             hidden_dim,
             dropout,
         )
 
-        self.norm2 = LayerNorm(
-            embedding_dim,
-        )
+    def forward(self, x, mask=None):
 
-        self.dropout = nn.Dropout(
-            dropout,
-        )
-
-    def forward(
-        self,
-        x,
-        mask=None,
-    ):
-
-        attention_output, attention_weights = self.attention(
-            x,
+        attn_out, weights = self.attention(
+            self.norm1(x),
             mask,
         )
 
-        x = self.norm1(
-            x + self.dropout(attention_output)
+        x = x + attn_out
+
+        ffn_out = self.ffn(
+            self.norm2(x)
         )
 
-        ff_output = self.feed_forward(x)
+        x = x + ffn_out
 
-        x = self.norm2(
-            x + self.dropout(ff_output)
-        )
-
-        return x, attention_weights
+        return x, weights

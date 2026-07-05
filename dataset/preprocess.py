@@ -9,9 +9,13 @@ from tokenizer.word_tokenizer import WordTokenizer
 
 class DatasetPreprocessor:
 
-    def __init__(self, tokenizer=None):
+    def __init__(self, tokenizer=None, cleaner=None):
 
-        self.cleaner = DatasetCleaner()
+        # BPE / char tokenizers work best on lightly-cleaned text (case and
+        # punctuation preserved). Callers can pass a custom cleaner; the
+        # default keeps the original lowercasing behaviour for the word
+        # tokenizer.
+        self.cleaner = cleaner if cleaner is not None else DatasetCleaner()
 
         if tokenizer is None:
             tokenizer = WordTokenizer()
@@ -49,13 +53,32 @@ class DatasetPreprocessor:
     def create_sequences(
         self,
         token_ids,
-        sequence_length=32
+        sequence_length=32,
+        stride=None,
     ):
+        """
+        Turn a flat list of token ids into (input, target) sequence pairs.
+
+        ``stride`` controls the step between the start of consecutive
+        windows:
+            stride=1              -> every overlapping window (dense; only
+                                     practical for tiny corpora)
+            stride=sequence_length -> non-overlapping windows (default;
+                                     standard for language-model pretraining
+                                     on large corpora)
+        """
+
+        if stride is None:
+            stride = sequence_length
+
+        stride = max(1, stride)
 
         X = []
         Y = []
 
-        for i in range(len(token_ids) - sequence_length):
+        last_start = len(token_ids) - sequence_length - 1
+
+        for i in range(0, last_start + 1, stride):
 
             x = token_ids[i:i + sequence_length]
 

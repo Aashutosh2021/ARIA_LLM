@@ -1,0 +1,21 @@
+﻿# ARIA-LLM core dependencies
+torch>=2.0
+numpy>=1.24
+PyYAML>=6.0
+tqdm>=4.65
+
+# Conversational chat mode (chat_ai.py) -- pretrained instruction-tuned model
+transformers>=4.40
+
+# Testing
+pytest>=7.0
+
+# -----------------------------------------------------------------------------
+# GPU note:
+#   The default `torch` above is the CPU build. For NVIDIA GPU training,
+#   install a CUDA build instead, e.g. (CUDA 12.8):
+#     pip install torch --index-url https://download.pytorch.org/whl/cu128
+#   Pick the index URL that matches your driver from https://pytorch.org.
+# -----------------------------------------------------------------------------
+
+
