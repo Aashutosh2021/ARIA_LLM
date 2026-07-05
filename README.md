@@ -1,8 +1,5 @@
 ﻿<div align="center">
 
-
-<div align="center">
-
 ---
 
 # 📑 Table of Contents
