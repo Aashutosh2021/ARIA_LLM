@@ -1,6 +1,6 @@
-﻿# ðŸ¤– ARIA-LLM
+﻿# ðŸ¤– AIRA-LLM
 
-> **ARIA-LLM** is a GPT-style Large Language Model built completely from scratch using Python and PyTorch.
+> **AIRA-LLM** is a GPT-style Large Language Model built completely from scratch using Python and PyTorch.
 > The goal of this project is to understand and implement every core component of a modern decoder-only language model instead of relying on existing pretrained models or high-level libraries.
 
 ---
@@ -35,7 +35,7 @@ pytest tests/test_pipeline.py -q      # 16 passed
 ```
 
 > **`chat_ai.py`** gives a genuinely conversational assistant by using a small
-> pretrained model. **`chat.py`** uses the 100%-from-scratch ARIA model â€” it
+> pretrained model. **`chat.py`** uses the 100%-from-scratch AIRA model â€” it
 > *continues* text in the style of its training data. The from-scratch model
 > now uses a **byte-level BPE tokenizer** (no more `<UNK>`) and trains on real
 > English (TinyStories) on the GPU.
@@ -66,7 +66,7 @@ The objective is not only to build a working language model, but also to deeply 
 
 ---
 
-# ðŸ§­ Two Ways to Use ARIA-LLM
+# ðŸ§­ Two Ways to Use AIRA-LLM
 
 The project ships **two chat experiences** that serve two different goals.
 Understanding the difference is key to the whole project.
@@ -130,7 +130,7 @@ conversation.
 # ðŸ“ Project Structure
 
 ```text
-ARIA-LLM/
+AIRA-LLM/
 â”‚
 â”œâ”€â”€ configs/                # YAML configs (model / training / dataset)
 â”‚   â”œâ”€â”€ dataset.yaml
@@ -576,7 +576,7 @@ Still planned:
 
 ### ðŸŽ¯ Version 1.0 â€” goal
 
-* Production-ready ARIA-LLM
+* Production-ready AIRA-LLM
 * Instruction fine-tuning of the from-scratch model
 * Documentation
 * API
@@ -625,7 +625,7 @@ This project is intended for educational and research purposes.
 
 **Aashutosh Kumar**
 
-**Project Name:** ARIA-LLM
+**Project Name:** AIRA-LLM
 
 Building a Large Language Model completely from scratch to understand every layer of modern AI systems.
 
