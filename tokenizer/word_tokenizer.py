@@ -76,3 +76,10 @@ class WordTokenizer(BaseTokenizer):
     def load(self, path: str):
 
         self.vocab.load(path)
+
+    # -------------------------
+    # Length
+    # -------------------------
+    def __len__(self):
+
+        return len(self.vocab)

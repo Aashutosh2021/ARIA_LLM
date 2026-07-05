@@ -1,1 +1,31 @@
+# Virtual environments
 /.venv
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Training / inference artifacts
+checkpoints/
+checkpoints_ts/
+logs/
+*.pt
+*.pth
+*.ckpt
+*.log
+
+# Large downloaded datasets (keep the tiny bundled corpus)
+data/tinystories.txt
+
+# Tokenizer artifacts saved at repo root
+/vocab.json
+/word_vocab.json
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

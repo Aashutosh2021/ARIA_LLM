@@ -1,7 +1,7 @@
+# pyrefly: ignore [missing-import]
 import torch
 
 from model.transformer_block import TransformerBlock
-
 
 layer = TransformerBlock(
     embedding_dim=256,
@@ -11,12 +11,12 @@ layer = TransformerBlock(
 
 x = torch.randn(
     2,
-    16,
+    32,
     256,
 )
 
-output, weights = layer(x)
+out, weights = layer(x)
 
-print(output.shape)
+print(out.shape)
 
 print(weights.shape)
