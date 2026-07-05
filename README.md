@@ -11,7 +11,6 @@ A research-oriented implementation of a GPT-style decoder-only Large Language Mo
 ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red?logo=pytorch)
 ![Status](https://img.shields.io/badge/Status-Active-success)
-![License](https://img.shields.io/badge/License-MIT-green)
 ![Version](https://img.shields.io/badge/Version-v0.3-blue)
 
 ⭐ Learn • Build • Experiment • Scale
