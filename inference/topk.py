@@ -3,6 +3,7 @@ AIRA-LLM
 Top-k Filtering
 """
 
+# pyrefly: ignore [missing-import]
 import torch
 
 

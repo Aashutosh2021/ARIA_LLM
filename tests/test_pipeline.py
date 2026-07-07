@@ -6,6 +6,7 @@ These complement the older script-style smoke tests by actually asserting
 on shapes, invariants, and a full train -> generate cycle.
 """
 
+# pyrefly: ignore [missing-import]
 import torch
 
 from model.gpt import GPT

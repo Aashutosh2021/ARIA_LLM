@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import torch
 
 from model.gpt import GPT

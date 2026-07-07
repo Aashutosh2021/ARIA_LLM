@@ -3,6 +3,7 @@ AIRA-LLM
 Optimizer Factory
 """
 
+# pyrefly: ignore [missing-import]
 import torch
 
 

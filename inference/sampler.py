@@ -6,7 +6,9 @@ Combines temperature + top-k + top-p filtering and draws (or argmax-es)
 the next token from a single step's logits.
 """
 
+# pyrefly: ignore [missing-import]
 import torch
+# pyrefly: ignore [missing-import]
 import torch.nn.functional as F
 
 from inference.temperature import apply_temperature

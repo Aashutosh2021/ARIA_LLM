@@ -14,7 +14,9 @@ Usage:
 import argparse
 from pathlib import Path
 
+# pyrefly: ignore [missing-import]
 import torch
+# pyrefly: ignore [missing-import]
 from torch.utils.data import DataLoader, random_split
 
 from dataset.loader import DatasetLoader

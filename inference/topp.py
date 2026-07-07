@@ -3,7 +3,9 @@ AIRA-LLM
 Top-p (Nucleus) Filtering
 """
 
+# pyrefly: ignore [missing-import]
 import torch
+# pyrefly: ignore [missing-import]
 import torch.nn.functional as F
 
 

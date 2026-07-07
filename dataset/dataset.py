@@ -3,7 +3,9 @@ AIRA-LLM
 PyTorch Dataset
 """
 
+# pyrefly: ignore [missing-import]
 import torch
+# pyrefly: ignore [missing-import]
 from torch.utils.data import Dataset
 
 

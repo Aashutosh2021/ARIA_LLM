@@ -55,6 +55,7 @@ def main():
 
     # Rebuild the model from the config stored in the checkpoint, then
     # load its weights. The config tells us which tokenizer to reload.
+    # pyrefly: ignore [missing-import]
     import torch
     checkpoint = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     config = checkpoint.get("config", {})

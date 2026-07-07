@@ -7,7 +7,9 @@ maintains ``beam_width`` candidate sequences ranked by length-normalized
 log-probability.
 """
 
+# pyrefly: ignore [missing-import]
 import torch
+# pyrefly: ignore [missing-import]
 import torch.nn.functional as F
 
 

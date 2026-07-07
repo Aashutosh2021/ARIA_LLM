@@ -5,6 +5,7 @@ Learning Rate Scheduler
 
 import math
 
+# pyrefly: ignore [missing-import]
 from torch.optim.lr_scheduler import CosineAnnealingLR, LambdaLR
 
 

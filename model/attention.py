@@ -43,9 +43,15 @@ class ScaledDotProductAttention(nn.Module):
 
         if mask is not None:
 
+            # Use the most-negative value representable in the current dtype
+            # instead of a hard-coded -1e9. -1e9 overflows float16 (max
+            # ~65504), which corrupts attention when running in half
+            # precision (e.g. the Qwen weights in fp16).
+            neg_inf = torch.finfo(scores.dtype).min
+
             scores = scores.masked_fill(
                 mask == 0,
-                -1e9,
+                neg_inf,
             )
 
         weights = F.softmax(

@@ -10,6 +10,7 @@ path so a checkpoint is self-describing.
 
 from pathlib import Path
 
+# pyrefly: ignore [missing-import]
 import torch
 
 

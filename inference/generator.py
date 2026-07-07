@@ -7,6 +7,7 @@ greedy decoding and temperature / top-k / top-p sampling. Handles the
 context window by cropping to the model's ``max_sequence_length``.
 """
 
+# pyrefly: ignore [missing-import]
 import torch
 
 from inference.sampler import sample_next_token

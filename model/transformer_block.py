@@ -1,7 +1,6 @@
 """
 AIRA-LLM
-
-GPT Decoder Block (Pre-Norm)
+GPT Decoder Block (Pre-Norm) with RMSNorm, GQA and SwiGLU support
 """
 
 # pyrefly: ignore [missing-import]
@@ -11,6 +10,7 @@ import torch.nn as nn
 
 from model.multi_head_attention import MultiHeadAttention
 from model.feed_forward import FeedForward
+from model.rmsnorm import RMSNorm
 
 
 class TransformerBlock(nn.Module):
@@ -20,45 +20,49 @@ class TransformerBlock(nn.Module):
         embedding_dim,
         num_heads,
         hidden_dim,
-        dropout=0.1,
+        num_kv_heads=None,
+        dropout=0.0,
         bias=False,
+        use_rmsnorm=True,
+        use_swiglu=True,
+        rms_norm_eps=1e-6,
     ):
         super().__init__()
 
-        self.norm1 = nn.LayerNorm(
-            embedding_dim,
-        )
+        NormLayer = lambda dim: RMSNorm(dim, eps=rms_norm_eps) if use_rmsnorm else nn.LayerNorm(dim)
+
+        self.norm1 = NormLayer(embedding_dim)
 
         self.attention = MultiHeadAttention(
-            embedding_dim,
-            num_heads,
-            dropout,
+            embedding_dim=embedding_dim,
+            num_heads=num_heads,
+            num_kv_heads=num_kv_heads,
+            dropout=dropout,
             bias=bias,
         )
 
-        self.norm2 = nn.LayerNorm(
-            embedding_dim,
-        )
+        self.norm2 = NormLayer(embedding_dim)
 
         self.ffn = FeedForward(
-            embedding_dim,
-            hidden_dim,
-            dropout,
+            embedding_dim=embedding_dim,
+            hidden_dim=hidden_dim,
+            dropout=dropout,
+            bias=bias,
+            use_swiglu=use_swiglu,
         )
 
-    def forward(self, x, mask=None):
-
+    def forward(self, x, freqs_cis=None, mask=None):
         attn_out, weights = self.attention(
             self.norm1(x),
-            mask,
+            freqs_cis=freqs_cis,
+            mask=mask,
         )
 
         x = x + attn_out
 
-        ffn_out = self.ffn(
-            self.norm2(x)
-        )
+        ffn_out = self.ffn(self.norm2(x))
 
         x = x + ffn_out
 
         return x, weights
+

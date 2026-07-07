@@ -35,14 +35,14 @@ class DatasetCleaner:
     # ---------------------------------
     def remove_urls(self, text):
 
-        return re.sub(r"http\S+|www\S+", "", text)
+        return re.sub(r"https?://\S+|www\.\S+", "", text)
 
     # ---------------------------------
     # Remove Emails
     # ---------------------------------
     def remove_emails(self, text):
 
-        return re.sub(r"\S+@\S+", "", text)
+        return re.sub(r"[^\s]+@[^\s]+", "", text)
 
     # ---------------------------------
     # Remove HTML
@@ -55,8 +55,8 @@ class DatasetCleaner:
     # Remove Multiple Spaces
     # ---------------------------------
     def remove_extra_spaces(self, text):
-
-        return re.sub(r"\s+", " ", text)
+        # Only match horizontal whitespace (spaces, tabs) so we don't destroy newlines
+        return re.sub(r"[ \t]+", " ", text)
 
     # ---------------------------------
     # Remove Multiple Newlines
