@@ -56,7 +56,7 @@ BANNER = r"""
 
 def parse_args():
     p = argparse.ArgumentParser(description="Chat with ARIA-LLM")
-    p.add_argument("--checkpoint", default="checkpoints_chat/best.pt")
+    p.add_argument("--checkpoint", default="checkpoints/ARIA_model.pt")
     p.add_argument("--vocab", default=None)
     p.add_argument("--max-new-tokens", type=int, default=64)
     p.add_argument("--temperature", type=float, default=0.7)

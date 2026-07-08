@@ -1,0 +1,9 @@
+# Dependencies for the Hugging Face Space (CPU inference only).
+# On the Space this file must be named requirements.txt -- see DEPLOY.md.
+# Kept separate from the repo's training requirements.txt (which pulls a CUDA
+# torch build and heavier training deps).
+torch>=2.0
+transformers>=4.40
+gradio>=4.44
+huggingface_hub>=0.24
+numpy>=1.24

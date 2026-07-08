@@ -173,10 +173,14 @@ def main():
     parser = argparse.ArgumentParser(description="Build ARIA chat corpus")
     parser.add_argument("--max-synthetic", type=int, default=40000,
                         help="Max pairs to take from conversations.txt")
-    parser.add_argument("--clean-upsample", type=int, default=6,
+    parser.add_argument("--clean-upsample", type=int, default=3,
                         help="How many times to repeat clean small-talk data")
     parser.add_argument("--identity-upsample", type=int, default=40,
                         help="How many times to repeat identity/persona data")
+    parser.add_argument("--max-answer-repeats", type=int, default=3,
+                        help="Drop clean pairs once their bot answer has "
+                             "appeared this many times (prevents one canned "
+                             "reply from dominating and collapsing the model)")
     args = parser.parse_args()
 
     seen = set()
@@ -185,6 +189,27 @@ def main():
     clean_pairs = []
     n_dialogs = load_dialogs(clean_pairs, seen)
     n_csv = load_csv(clean_pairs, seen)
+
+    # Cap how often any single bot answer may appear. Sources like dialogs.txt
+    # reuse the same reply for many different questions (e.g. one mailing
+    # address answered to dozens of prompts); left unchecked and then
+    # upsampled, that answer dominates a small fine-tune and the model
+    # collapses onto it regardless of input. Keep only the first
+    # --max-answer-repeats occurrences of each answer.
+    answer_counts = {}
+    capped_pairs = []
+    dropped = 0
+    for q, a in clean_pairs:
+        key = a.lower()
+        if answer_counts.get(key, 0) >= args.max_answer_repeats:
+            dropped += 1
+            continue
+        answer_counts[key] = answer_counts.get(key, 0) + 1
+        capped_pairs.append((q, a))
+    clean_pairs = capped_pairs
+    if dropped:
+        print(f"Dropped {dropped} pairs whose answer exceeded "
+              f"--max-answer-repeats={args.max_answer_repeats}")
 
     # Intent-based canned responses (greetings, goodbyes, identity-ish).
     intent_pairs = load_intents(clean_pairs, seen)
@@ -222,6 +247,18 @@ def main():
     RNG.shuffle(examples)
 
     OUT.write_text("".join(examples), encoding="utf-8")
+
+    # Balance report: the most frequent bot answers in the final corpus. If any
+    # single answer is a large fraction of the total, expect mode collapse.
+    from collections import Counter
+    counts = Counter()
+    for q, a in clean_pairs + intent_pairs + synth_pairs:
+        counts[a.lower()] += 1
+    # Reflect the upsampling multipliers so the report matches the real corpus.
+    print("\nMost common bot answers in the corpus (after capping):")
+    for ans, c in counts.most_common(8):
+        preview = ans[:60] + ("..." if len(ans) > 60 else "")
+        print(f"  {c:4d}x  {preview}")
 
     size_mb = OUT.stat().st_size / 1e6
     print(f"\nWrote {len(examples):,} examples ({size_mb:.1f} MB) -> {OUT}")

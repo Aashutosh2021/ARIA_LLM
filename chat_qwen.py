@@ -43,7 +43,7 @@ from model.gpt import GPT
 from utils.device import get_device, device_name
 
 
-CKPT_PATH = "checkpoints/qwen2.5-0.5b-instruct.pt"
+CKPT_PATH = "checkpoints/ARIA_model.pt"
 QWEN_ID = "Qwen/Qwen2.5-0.5B-Instruct"
 IM_END = 151645  # Qwen's <|im_end|> token id
 
