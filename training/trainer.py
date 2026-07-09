@@ -175,9 +175,14 @@ class Trainer:
 
         path = f"{self.checkpoint_dir}/{filename}"
 
+        # Under DataParallel the real model lives at model.module; save that so
+        # the checkpoint keys have no "module." prefix and load cleanly for
+        # single-GPU / CPU inference.
+        model = getattr(self.model, "module", self.model)
+
         save_checkpoint(
             path=path,
-            model=self.model,
+            model=model,
             optimizer=self.optimizer,
             scheduler=self.scheduler,
             step=self.step,

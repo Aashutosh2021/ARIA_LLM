@@ -12,18 +12,17 @@ license: apache-2.0
 
 # ARIA-LLM
 
-Chat with a GPT-style transformer built **from scratch** — RoPE, RMSNorm,
-SwiGLU, and Grouped-Query Attention are all hand-written (see `model/`).
+Chat with **ARIA**, a GPT-style transformer built entirely from scratch — RoPE,
+RMSNorm, SwiGLU, and Grouped-Query Attention are all hand-written (see
+`model/`). It's trained from random initialization with its own byte-level BPE
+tokenizer. No third-party model runs at inference.
 
-Two selectable weight sets run on the same architecture:
+ARIA was trained via **knowledge distillation**: a larger model generated a
+conversational dataset, and ARIA learned from that data from scratch — so the
+weights are entirely its own.
 
-- **ARIA + Qwen2.5 weights** — real Qwen2.5-0.5B-Instruct weights loaded into
-  this hand-written architecture, proving the forward pass is numerically
-  correct.
-- **ARIA (fine-tuned)** — the same architecture fine-tuned on the project's own
-  conversational corpus.
-
-Weights are hosted in a companion Hugging Face model repo and downloaded at
-startup (set the `HF_MODEL_REPO` Space secret). Runs on the free CPU tier.
+The weights (`aria.pt`) and tokenizer (`aria_vocab.json`) are hosted in a
+companion Hugging Face model repo and downloaded at startup (set the
+`HF_MODEL_REPO` Space secret). Runs on the free CPU tier.
 
 Built by Aashutosh.

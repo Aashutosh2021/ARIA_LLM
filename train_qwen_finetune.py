@@ -68,6 +68,8 @@ def parse_args():
                    help="Fine-tune LR -- keep this low, the weights are already trained")
     p.add_argument("--device", default="auto",
                    choices=["auto", "cpu", "cuda", "mps"])
+    p.add_argument("--no-data-parallel", action="store_true",
+                   help="Disable multi-GPU DataParallel even if >1 GPU is present")
     p.add_argument("--seed", type=int, default=42)
     return p.parse_args()
 
@@ -173,6 +175,16 @@ def main():
 
     print(f"Model parameters: {model.num_params():,}  "
           f"(Qwen weights transplanted, {vocab_size - n_copy} fresh token rows)")
+
+    # Multi-GPU: on Kaggle's "T4 x2" both cards can share the batch via
+    # DataParallel. It replicates the model on each GPU, splits the batch,
+    # and averages gradients -- roughly 2x throughput with a big enough batch.
+    # The transplant above must run BEFORE wrapping (it touches model.* directly).
+    n_gpus = torch.cuda.device_count() if device.type == "cuda" else 1
+    if n_gpus > 1 and not args.no_data_parallel:
+        print(f"Using {n_gpus} GPUs via DataParallel "
+              f"(effective batch = {args.batch_size} split across them).")
+        model = torch.nn.DataParallel(model)
 
     # ------------------------------------------------------------------
     # Train
