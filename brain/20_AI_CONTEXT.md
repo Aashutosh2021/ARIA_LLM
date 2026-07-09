@@ -4,11 +4,10 @@ A compressed memory context cheat-sheet designed for future incoming AI agents.
 
 ## Core Context Essentials
 
-- **What is this project?** A from-scratch PyTorch transformer implementation with custom classes (`GPT`, `TransformerBlock`, `MultiHeadAttention`, `FeedForward`, `RMSNorm`, `BPETokenizer`, `Trainer`, etc.) that also has import mechanisms to load real pre-trained weights from `Qwen2.5-0.5B-Instruct` into our handwritten classes.
+- **What is this project?** A from-scratch PyTorch transformer implementation with custom classes (`GPT`, `TransformerBlock`, `MultiHeadAttention`, `FeedForward`, `RMSNorm`, `BPETokenizer`, `Trainer`, etc.) designed to run SFT and pretraining loops completely from scratch.
 - **Where are the core weights?** 
   - Standard training saves checkpoints under `checkpoints/best.pt` and `checkpoints/last.pt`.
-  - Qwen converted weights are saved under `checkpoints/qwen2.5-0.5b-instruct.pt`.
-- **How is data structured?** Conversational text files (`data/conversations.txt` and `data/dialogs.txt`) are formatted using turn prefixes:
+  - **How is data structured?** Conversational text files (`data/conversations.txt` and `data/dialogs.txt`) are formatted using turn prefixes:
   ```text
   USER: <query>
   AIRA: <response>
@@ -19,4 +18,3 @@ A compressed memory context cheat-sheet designed for future incoming AI agents.
 ## Common Gotchas & Lessons
 - **Newline bug:** Do not use `\s+` replacement during dataset cleaning. It converts newlines to spaces, flattening dialogue structures. Use `[ \t]+` to preserve `\n` boundaries.
 - **BPE vs Char tokenizer:** Classical character tokenizers are simple but result in large token lists. Use BPE tokenizers with defined target vocabulary sizes for real pretraining or SFT runs.
-- **Qwen loading keys:** Qwen has specific state dict keys and expects Rotary embeddings (RoPE), RMSNorm, SwiGLU activation, and Grouped-Query Attention (GQA).

@@ -5,8 +5,6 @@ An annotated reference of key files in the ARIA-LLM repository.
 ## Root Directory
 
 - [chat.py](file:///d:/Personal%20Project/ARIA-LLM/chat.py) — Interactive console REPL for local ARIA model.
-- [chat_ai.py](file:///d:/Personal%20Project/ARIA-LLM/chat_ai.py) — Backup/alternative CLI chat interface.
-- [chat_qwen.py](file:///d:/Personal%20Project/ARIA-LLM/chat_qwen.py) — Primary interactive demo executing real Qwen2.5 weights inside ARIA architecture.
 - [train.py](file:///d:/Personal%20Project/ARIA-LLM/train.py) — Main training pipeline launcher.
 - [train_chat.py](file:///d:/Personal%20Project/ARIA-LLM/train_chat.py) — Script to run conversational training.
 - [conftest.py](file:///d:/Personal%20Project/ARIA-LLM/conftest.py) — Pytest configuration.
@@ -75,5 +73,12 @@ An annotated reference of key files in the ARIA-LLM repository.
 ## scripts/
 
 - [scripts/prepare_conversations.py](file:///d:/Personal%20Project/ARIA-LLM/scripts/prepare_conversations.py) — Synthetic multi-template conversational corpus generator.
-- [scripts/import_qwen.py](file:///d:/Personal%20Project/ARIA-LLM/scripts/import_qwen.py) — State dict converter for Qwen2.5 weights.
 - [scripts/format_dialogs.py](file:///d:/Personal%20Project/ARIA-LLM/scripts/format_dialogs.py) — Tab-separated list formatter.
+- [scripts/build_chat_corpus.py](file:///d:/Personal%20Project/ARIA-LLM/scripts/build_chat_corpus.py) — Merges local datasets into one chat corpus; caps per-answer repeats to prevent mode collapse.
+- [scripts/distill_generate.py](file:///d:/Personal%20Project/ARIA-LLM/scripts/distill_generate.py) — Uses Qwen2.5 as a data-only teacher to generate a chat corpus (no Qwen weights enter ARIA).
+- [scripts/export_for_deploy.py](file:///d:/Personal%20Project/ARIA-LLM/scripts/export_for_deploy.py) — Bundles a checkpoint + tokenizer into deploy/ for the web app.
+
+## Root (deployment / demo)
+
+- [app.py](file:///d:/Personal%20Project/ARIA-LLM/app.py) — Gradio web chat demo serving the from-scratch ARIA (no third-party model at inference).
+- [distill_aria_colab.ipynb](file:///d:/Personal%20Project/ARIA-LLM/distill_aria_colab.ipynb) — Colab pipeline: generate data → train ARIA from scratch → export → upload.

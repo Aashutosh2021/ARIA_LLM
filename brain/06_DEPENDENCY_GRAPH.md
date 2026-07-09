@@ -43,7 +43,7 @@ graph TD
     end
 
     %% Dependencies relationships
-    Configs -. Loads Configurations .-> train.py & chat_qwen.py
+    Configs -. Loads Configurations .-> train.py & chat.py
     Loader --> Preprocessor
     Tokenizer --> Preprocessor
     Cleaner --> Preprocessor
@@ -58,8 +58,8 @@ graph TD
     Trainer --> GPT
     Trainer --> Loss & Optimizer & Scheduler & Checkpoint
     
-    chat_qwen.py --> GPT
-    chat_qwen.py --> InferenceLayer
+    chat.py --> GPT
+    chat.py --> InferenceLayer
     Generator --> Sampler
 ```
 
@@ -67,4 +67,4 @@ graph TD
 1. **Configuration Loader:** `utils/helper.py` reads YAML config files to set parameters for `GPT` class initialization and `Trainer` training constraints.
 2. **Preprocessing Pipeline:** `dataset/preprocess.py` combines text cleaner (`dataset/cleaner.py`) and vocab tokenizers (`tokenizer/bpe_tokenizer.py`) to prepare dataset loader sequences.
 3. **Training Execution:** `train.py` loads raw text datasets, configures the `GPT` model, and boots `Trainer` to run gradients minimization loops.
-4. **Interactive Chat:** `chat_qwen.py` loads Qwen2.5 weights, passes user queries to `GPT.forward()` through the `inference/generator.py` autoregressive generator, streaming decoded tokens back.
+4. **Interactive Chat:** `chat.py` loads a locally-trained checkpoint and passes user queries to `GPT.forward()` through the `inference/generator.py` autoregressive generator.

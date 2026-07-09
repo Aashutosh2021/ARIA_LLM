@@ -4,15 +4,10 @@ ARIA-LLM contains several global constants, defaults, and configuration options:
 
 ## 1. CLI Execution Constants
 
-- **`DEFAULT_SYSTEM`** (`chat_qwen.py`):
-  Initial Qwen prompt instructing the assistant on its persona:
-  `"You are ARIA, a helpful and friendly AI assistant running entirely on a transformer architecture built from scratch. Answer clearly and concisely."`
-- **`QWEN_ID`** (`chat_qwen.py`):
-  The Hugging Face repo ID: `"Qwen/Qwen2.5-0.5B-Instruct"`.
-- **`IM_END`** (`chat_qwen.py`):
-  The Qwen-specific termination token ID: `151645`.
-- **`BANNER`** (`chat.py` / `chat_qwen.py`):
+- **`BANNER`** (`chat.py`):
   Console ASCII art banner displayed at REPL boot.
+- **`USER_TOKEN`**, **`BOT_TOKEN`**, **`END_TOKEN`** (`train_chat.py`):
+  Special tokens used to wrap conversational dialogue turns (`<|user|>`, `<|bot|>`, `<|endoftext|>`).
 
 ---
 

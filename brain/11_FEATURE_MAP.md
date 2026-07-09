@@ -9,8 +9,7 @@ graph TD
     User([User Objective]) --> Prep[1. Data Generation & Preprocessing]
     User --> Train[2. Model Training]
     User --> ChatLocal[3. Chat with Local trained Model]
-    User --> ChatQwen[4. Chat with Converted Qwen Model]
-
+    
     %% Prep Subgraph
     subgraph Feature 1
         Prep --> GenConversations[prepare_conversations.py: generates synthetic dialogs]
@@ -31,11 +30,7 @@ graph TD
         LocalREPL --> LocalInference[generator.py: autoregressive token decoding]
     end
 
-    %% Chat Qwen Subgraph
-    subgraph Feature 4
-        ChatQwen --> QwenConvert[import_qwen.py: downloads & translates Qwen weights]
-        ChatQwen --> QwenREPL[chat_qwen.py: streams responses via hand-written layers]
-    end
+    
 ```
 
 ## Features Details
@@ -55,6 +50,3 @@ graph TD
 - **Temperature Scaling:** Standard scaling for logits.
 - **Repetition Penalty:** Penalizes already produced tokens to avoid generation loops.
 
-### 4. Qwen-2.5 Weight Importer
-- **State Dictionary Mapping:** Maps Hugging Face's Qwen2.5 weights schema to our custom handwritten transformer blocks.
-- **Grouped-Query Attention Support:** Handles caching and RoPE transformations.

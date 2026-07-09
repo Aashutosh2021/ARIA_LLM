@@ -8,7 +8,6 @@ This matrix maps core user features to implementation files in the repository.
 | **BPE Tokenization** | | | X | | | | `bpe_tokenizer.py`, `vocab.py` |
 | **GPT Model Optimization** | X | | | | X | | `train.py`, `trainer.py`, `gpt.py` |
 | **Autoregressive Sampling** | X | | | X | | | `generator.py`, `sampler.py` |
-| **Qwen Weights Importing** | X | | | | | X | `import_qwen.py`, `gpt.py` |
 | **Streaming Chat UI** | X | | | X | | | `chat_qwen.py`, `chat.py` |
 
 ## Mapping Summary

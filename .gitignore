@@ -11,7 +11,7 @@ __pycache__/
 
 # Training / inference artifacts
 checkpoints/
-checkpoints_ts/
+checkpoints_chat/
 logs/
 *.pt
 *.pth
@@ -31,3 +31,5 @@ data/tinystories.txt
 .idea/
 .vscode/
 Claude session.txt
+.tmp.driveupload
+.tmp.drivedonload

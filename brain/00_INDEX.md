@@ -28,7 +28,7 @@ Welcome to the **ARIA-LLM Permanent AI Brain**. This directory serves as the doc
 | `08` | [08_DATA_FLOW.md](file:///d:/Personal%20Project/ARIA-LLM/brain/08_DATA_FLOW.md) | Step-by-step tensor transforms and preprocessing flows. |
 | `09` | [09_API_MAP.md](file:///d:/Personal%20Project/ARIA-LLM/brain/09_API_MAP.md) | Details of command-line arguments and configuration keys. |
 | `10` | [10_DATABASE_MAP.md](file:///d:/Personal%20Project/ARIA-LLM/brain/10_DATABASE_MAP.md) | File-based storage (checkpoints, JSON vocab, raw text corpora). |
-| `11` | [11_FEATURE_MAP.md](file:///d:/Personal%20Project/ARIA-LLM/brain/11_FEATURE_MAP.md) | Mapping of core functional requirements (BPE, Qwen loading, sampling). |
+| `11` | [11_FEATURE_MAP.md](file:///d:/Personal%20Project/ARIA-LLM/brain/11_FEATURE_MAP.md) | Mapping of core functional requirements (BPE, tokenization, sampling). |
 | `12` | [12_UI_MAP.md](file:///d:/Personal%20Project/ARIA-LLM/brain/12_UI_MAP.md) | Command-line REPL / interactive chat interface structures. |
 | `13` | [13_CONFIGURATION_MAP.md](file:///d:/Personal%20Project/ARIA-LLM/brain/13_CONFIGURATION_MAP.md) | YAML schema mapping configs for training, dataset, and model. |
 | `14` | [14_GLOBAL_VARIABLES.md](file:///d:/Personal%20Project/ARIA-LLM/brain/14_GLOBAL_VARIABLES.md) | Global constants, seed states, and run options. |

@@ -2,36 +2,37 @@
 
 Events and operational flows in ARIA-LLM.
 
-## Interactive Chat Event Loop (`chat_qwen.py`)
+## Interactive Chat Event Loop (`chat.py`)
 
-This graph maps the event flow for a single user query execution in `chat_qwen.py`:
+This graph maps the event flow for a single user query execution in `chat.py`:
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor User as User Console
-    participant Chat as chat_qwen.py
-    participant Tok as Qwen AutoTokenizer
+    participant Chat as chat.py
+    participant Tok as BPETokenizer
     participant Model as GPT (model/gpt.py)
-    participant Gen as generate (chat_qwen.py)
+    participant Gen as generate_ids (chat.py)
 
     User->>Chat: Enters query
-    Note over Chat: Formats conversation chat templates
+    Note over Chat: Formats conversation chat templates if chat_format is True
     Chat->>Tok: encode(prompt_text)
     Tok-->>Chat: returns input_ids
-    Chat->>Gen: calls generate(model, input_ids)
+    Chat->>Gen: calls generate_ids(model, input_ids)
     
     loop Max New Tokens
         Gen->>Model: forward(context_ids)
         Model-->>Gen: returns next logits
-        Note over Gen: Adjust logits (temperature, top-p, repetition penalty)
+        Note over Gen: Adjust logits (temperature, top-k, top-p, greedy)
         Gen->>Tok: decode(next_token_id)
-        Tok-->>User: streams decoded token piece to stdout
-        alt Token is <|im_end|>
+        alt Stop string encountered
             Note over Gen: Breaks loop
         end
     end
     
+    Gen-->>Chat: returns reply
+    Chat-->>User: prints reply
     Note over Chat: Appends assistant reply to history
 ```
 
