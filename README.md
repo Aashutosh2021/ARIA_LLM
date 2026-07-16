@@ -1,6 +1,5 @@
 ﻿<div align="center">
  
-=======
 # 🤖 AIRA-LLM
 
 ### 🚀 Build Your Own GPT-Style Large Language Model From Scratch
@@ -18,7 +17,6 @@ A research-oriented implementation of a GPT-style decoder-only Large Language Mo
 
 </div>
 
->>>>>>> 506c0e1eea328a37868c5acb93ce1a4aee849f6e
 ---
 
 # 📑 Table of Contents
